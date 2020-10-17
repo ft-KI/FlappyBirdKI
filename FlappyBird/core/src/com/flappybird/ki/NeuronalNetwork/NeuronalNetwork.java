@@ -239,4 +239,55 @@ public class NeuronalNetwork {
     public ArrayList<WorkingNeuron> getOutputNeurons() {
         return outputNeurons;
     }
+
+
+    public NeuronalNetwork cloneFullMeshed() {
+        NeuronalNetwork network = new NeuronalNetwork();
+        network.createInputNeurons(this.inputNeurons.size());
+        for (int i = 0; i < this.hiddenNeurons.size(); i++) {
+            network.addHiddenLayer(this.hiddenNeurons.get(i).size());
+        }
+        network.createOutputtNeurons(this.outputNeurons.size());
+
+
+        network.setInputNeurons((ArrayList<InputNeuron>) this.inputNeurons.clone());
+        network.setHiddenNeurons((ArrayList<ArrayList<WorkingNeuron>>) this.hiddenNeurons.clone());
+        network.setOutputNeurons((ArrayList<WorkingNeuron>) this.outputNeurons.clone());
+
+
+
+        return network;
+    }
+    public int NeuronHiddenandOutputCount(){
+        int count=outputNeurons.size();
+        for(int i=0;i<hiddenNeurons.size();i++){
+            count+=hiddenNeurons.get(i).size();
+        }
+        return count;
+    }
+    public void randomMutate(float mutationrate){
+        int index=(int)(Math.random()*(NeuronHiddenandOutputCount()));
+        if(index<=outputNeurons.size()){
+            outputNeurons.get(index).randomMutate(mutationrate);
+        }
+        for(int i=0;i<hiddenNeurons.size();i++){
+            
+        }
+    }
+
+    public ArrayList<ArrayList<WorkingNeuron>> getHiddenNeurons() {
+        return hiddenNeurons;
+    }
+
+    public void setHiddenNeurons(ArrayList<ArrayList<WorkingNeuron>> hiddenNeurons) {
+        this.hiddenNeurons = hiddenNeurons;
+    }
+
+    public void setInputNeurons(ArrayList<InputNeuron> inputNeurons) {
+        this.inputNeurons = inputNeurons;
+    }
+
+    public void setOutputNeurons(ArrayList<WorkingNeuron> outputNeurons) {
+        this.outputNeurons = outputNeurons;
+    }
 }

@@ -46,6 +46,9 @@ public class WorkingNeuron implements Neuron{
         smallDelta=0;
         isvalueset=false;
     }
+    public void randomMutate(float mutationrate){
+
+    }
     public void deltaLearning(float epsilon) {
         float bigDeltaFaktorbestandteil=activationFunktion.derivative(getOutputValue()) * epsilon * smallDelta;
         for(int i = 0; i<inputConnections.size(); i++) {

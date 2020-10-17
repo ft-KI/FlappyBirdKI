@@ -2,7 +2,6 @@ package com.flappybird.ki.Game;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.flappybird.ki.Game.birds.Bird;
-import com.flappybird.ki.Game.birds.HumanBird;
 import com.flappybird.ki.Game.birds.KIBird;
 import com.flappybird.ki.Main;
 
@@ -26,16 +25,7 @@ public class FlappyBirdGame {
         this.Yposition=y;
         this.weight=w;
         this.height=h;
-        Bird testbird=new HumanBird();
-        testbird.setX(Xposition+birdsX);
-        testbird.setY(Xposition+height/2);
-        birds.add(testbird);
-        Bird kibird=new KIBird();
-        kibird.setWorld(this);
-        kibird.setX(Xposition+birdsX);
-        kibird.setY(Xposition+height/2);
-        birds.add(kibird);
-
+        createNewRandomPopulation(20);
     }
     void createObstacles(){
         if(worldposition>oldworldposition+300) {
@@ -62,6 +52,7 @@ public class FlappyBirdGame {
             obstacles.get(i).setX(obstacles.get(i).getX()-1);
             if(obstacles.get(i).getX()<Xposition-obstacclewide){
                 obstacles.remove(i);
+                i--;
             }
         }
         for(int i = obstacles.size() - 1; i >= 0; i--){
@@ -70,18 +61,55 @@ public class FlappyBirdGame {
             }
         }
         for(int i=0;i<birds.size();i++){
+            boolean hadkilled=false;
             birds.get(i).draw();
             if(birds.get(i).getY()<this.Xposition){
                 birds.get(i).kill();
+                hadkilled=true;
             }
                 if (birds.get(i).getX() > obstacles.get(actualObstacleIndex).getX()) {
                     if (birds.get(i).getY() < obstacles.get(actualObstacleIndex).getHoleheight() + Yposition || birds.get(i).getY() > obstacles.get(actualObstacleIndex).getHoleheight() + Yposition + obstacles.get(actualObstacleIndex).getHolesize()) {
                         birds.get(i).kill();
+                        hadkilled=true;
                     }
                 }
-            }
+                if(hadkilled){if(birds.size()!=1){birds.remove(i);i--;}};
+
+        }
+
+        if(birds.size()<=1){
+            System.out.println(worldposition);
+            createPopulation(birds.get(0),20);
+            resetWorld();
+        }
+
 
         worldposition+=1;
+    }
+    public void createPopulation(Bird mother,int anzahl){
+        for(int i=0;i<anzahl;i++) {
+            Bird kibird = new KIBird(mother);
+            kibird.setWorld(this);
+            kibird.setX(Xposition + birdsX);
+            kibird.setY(Xposition + height / 2);
+            birds.add(kibird);
+        }
+    }
+    public void createNewRandomPopulation(int anzahl){
+        for(int i=0;i<anzahl;i++) {
+            Bird kibird = new KIBird();
+            kibird.setWorld(this);
+            kibird.setX(Xposition + birdsX);
+            kibird.setY(Xposition + height / 2);
+            birds.add(kibird);
+        }
+    }
+    public void resetWorld(){
+        obstacles.clear();
+        worldposition=0;
+        oldworldposition=-400;
+        actualObstacleIndex=0;
+        worldposition=0;
     }
 
     public ArrayList<Obstacle> getObstacles() {
@@ -94,5 +122,21 @@ public class FlappyBirdGame {
 
     public int getActualObstacleIndex() {
         return actualObstacleIndex;
+    }
+
+    public int getObstacclewide() {
+        return obstacclewide;
+    }
+
+    public int getBirdsX() {
+        return birdsX;
+    }
+
+    public int getXposition() {
+        return Xposition;
+    }
+
+    public int getYposition() {
+        return Yposition;
     }
 }
