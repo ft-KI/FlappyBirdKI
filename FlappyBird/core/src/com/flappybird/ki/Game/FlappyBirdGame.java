@@ -2,6 +2,7 @@ package com.flappybird.ki.Game;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.flappybird.ki.Game.birds.Bird;
+import com.flappybird.ki.Game.birds.HumanBird;
 import com.flappybird.ki.Main;
 
 import java.util.ArrayList;
@@ -15,13 +16,17 @@ public class FlappyBirdGame {
     int height=0;
     int worldposition=0;
     int oldworldposition=-400;
-    int holesize=150;
+    int holesize=180;
     int obstacclewide=40;
     public FlappyBirdGame(int x,int y,int w,int h){
         this.Xposition=x;
         this.Yposition=y;
         this.weight=w;
         this.height=h;
+        Bird testbird=new HumanBird();
+        testbird.setX(Xposition+100);
+        testbird.setY(Xposition+height/2);
+        birds.add(testbird);
 
     }
     void createObstacles(){
@@ -42,6 +47,9 @@ public class FlappyBirdGame {
             if(obstacles.get(i).getX()<Xposition-obstacclewide){
                 obstacles.remove(i);
             }
+        }
+        for(int i=0;i<birds.size();i++){
+            birds.get(i).draw();
         }
         worldposition+=1;
     }

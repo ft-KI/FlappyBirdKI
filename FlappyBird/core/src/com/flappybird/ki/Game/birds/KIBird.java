@@ -1,5 +1,5 @@
 package com.flappybird.ki.Game.birds;
 
-public class KIBird extends Bird{
+public class KIBird{
 
 }
