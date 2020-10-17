@@ -34,6 +34,14 @@ public class Obstacle {
         return x;
     }
 
+    public int getHoleheight() {
+        return holeheight;
+    }
+
+    public int getHolesize() {
+        return holesize;
+    }
+
     public void setWidth(int width) {
         this.width = width;
     }

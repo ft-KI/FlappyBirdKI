@@ -41,14 +41,11 @@ public class FlappyBirdGame {
     public void draw(){
         createObstacles();
         Main.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        Main.shapeRenderer.setColor(1,1,1,1);
         Main.shapeRenderer.rect(this.Xposition,this.Yposition,this.weight,this.height);
         Main.shapeRenderer.end();
 
-        for(int i = obstacles.size() - 1; i >= 0; i--){
-            if(obstacles.get(i).getX()>birdsX+Xposition-obstacclewide){
-                actualObstacleIndex=i;
-            }
-        }
+
             for(int i=0;i<obstacles.size();i++){
             if(i==actualObstacleIndex){
                 Main.shapeRenderer.setColor(0,0.6f,0,1f);
@@ -61,9 +58,23 @@ public class FlappyBirdGame {
                 obstacles.remove(i);
             }
         }
+        for(int i = obstacles.size() - 1; i >= 0; i--){
+            if(obstacles.get(i).getX()>birdsX+Xposition-obstacclewide){
+                actualObstacleIndex=i;
+            }
+        }
         for(int i=0;i<birds.size();i++){
             birds.get(i).draw();
-        }
+            if(birds.get(i).getY()<this.Xposition){
+                birds.get(i).kill();
+            }
+                if (birds.get(i).getX() > obstacles.get(actualObstacleIndex).getX()) {
+                    if (birds.get(i).getY() < obstacles.get(actualObstacleIndex).getHoleheight() + Yposition || birds.get(i).getY() > obstacles.get(actualObstacleIndex).getHoleheight() + Yposition + obstacles.get(actualObstacleIndex).getHolesize()) {
+                        birds.get(i).kill();
+                    }
+                }
+            }
+
         worldposition+=1;
     }
 }
