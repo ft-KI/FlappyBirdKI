@@ -16,12 +16,13 @@ public class FlappyBirdGame {
     int height=0;
     int worldposition=0;
     int oldworldposition=-400;
-    int holesize=110;
+    int holesize=160;
     int obstacclewide=40;
     int actualObstacleIndex=0;
     int birdsX=100;
-    int populationsize=6;
-    int generation=0;
+    int populationsize=20;
+    int generation=1;
+    int record = 0;
     public FlappyBirdGame(int x,int y,int w,int h){
         this.Xposition=x;
         this.Yposition=y;
@@ -37,7 +38,9 @@ public class FlappyBirdGame {
         }
     }
     public void draw(){
-        System.out.println("generation: "+generation+" birdsalive: "+birds.size());
+        if(worldposition>record) record =worldposition;
+
+        System.out.println("generation: "+generation+" birdsalive: "+birds.size()+" Rekord: "+record+" Progress: "+worldposition);
         createObstacles();
         Main.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         Main.shapeRenderer.setColor(1,1,1,1);
@@ -82,6 +85,7 @@ public class FlappyBirdGame {
 
         if(birds.size()<=1){
             generation++;
+            birds.get(0).setFitness(worldposition);
             //System.out.println(worldposition);
             createPopulation(birds.get(0),populationsize);
             resetWorld();

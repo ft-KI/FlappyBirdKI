@@ -13,7 +13,7 @@ public abstract class Bird {
     boolean iskilled=false;
     FlappyBirdGame world;
     public void flap(){
-        fallspeed=-7;
+        fallspeed=-8;
     }
     abstract void update();
     public void draw(){
@@ -51,6 +51,10 @@ public abstract class Bird {
 
     public void setFitness(int fitness) {
         this.fitness = fitness;
+    }
+
+    public int getFitness() {
+        return fitness;
     }
 
     public void setWorld(FlappyBirdGame world) {
