@@ -3,6 +3,7 @@ package com.flappybird.ki.Game;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.flappybird.ki.Game.birds.Bird;
 import com.flappybird.ki.Game.birds.HumanBird;
+import com.flappybird.ki.Game.birds.KIBird;
 import com.flappybird.ki.Main;
 
 import java.util.ArrayList;
@@ -29,6 +30,11 @@ public class FlappyBirdGame {
         testbird.setX(Xposition+birdsX);
         testbird.setY(Xposition+height/2);
         birds.add(testbird);
+        Bird kibird=new KIBird();
+        kibird.setWorld(this);
+        kibird.setX(Xposition+birdsX);
+        kibird.setY(Xposition+height/2);
+        birds.add(kibird);
 
     }
     void createObstacles(){
@@ -76,5 +82,17 @@ public class FlappyBirdGame {
             }
 
         worldposition+=1;
+    }
+
+    public ArrayList<Obstacle> getObstacles() {
+        return obstacles;
+    }
+
+    public ArrayList<Bird> getBirds() {
+        return birds;
+    }
+
+    public int getActualObstacleIndex() {
+        return actualObstacleIndex;
     }
 }

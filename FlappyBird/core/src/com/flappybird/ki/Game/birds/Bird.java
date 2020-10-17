@@ -1,6 +1,7 @@
 package com.flappybird.ki.Game.birds;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.flappybird.ki.Game.FlappyBirdGame;
 import com.flappybird.ki.Main;
 
 public abstract class Bird {
@@ -9,6 +10,7 @@ public abstract class Bird {
     int fitness=0;
     float fallspeed=0;
     boolean iskilled=false;
+    FlappyBirdGame world;
     public void flap(){
         fallspeed=-7;
     }
@@ -48,5 +50,13 @@ public abstract class Bird {
 
     public void setFitness(int fitness) {
         this.fitness = fitness;
+    }
+
+    public void setWorld(FlappyBirdGame world) {
+        this.world = world;
+    }
+
+    public FlappyBirdGame getWorld(){
+        return world;
     }
 }
