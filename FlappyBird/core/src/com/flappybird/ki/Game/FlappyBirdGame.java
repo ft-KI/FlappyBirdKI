@@ -16,11 +16,11 @@ public class FlappyBirdGame {
     int height=0;
     int worldposition=0;
     int oldworldposition=-400;
-    int holesize=180;
+    int holesize=110;
     int obstacclewide=40;
     int actualObstacleIndex=0;
     int birdsX=100;
-    int populationsize=10;
+    int populationsize=200;
     int generation=0;
     public FlappyBirdGame(int x,int y,int w,int h){
         this.Xposition=x;
@@ -30,7 +30,7 @@ public class FlappyBirdGame {
         createNewRandomPopulation(populationsize);
     }
     void createObstacles(){
-        if(worldposition>oldworldposition+300) {
+        if(worldposition>oldworldposition+250) {
             oldworldposition=worldposition;
             Obstacle test = new Obstacle(Xposition + weight,this.Yposition, (int) (Math.random() * (height-holesize-50)+50), obstacclewide,this.height,holesize);
             obstacles.add(test);
@@ -70,8 +70,8 @@ public class FlappyBirdGame {
                 birds.get(i).kill();
                 hadkilled=true;
             }
-                if (birds.get(i).getX() > obstacles.get(actualObstacleIndex).getX()) {
-                    if (birds.get(i).getY() < obstacles.get(actualObstacleIndex).getHoleheight() + Yposition || birds.get(i).getY() > obstacles.get(actualObstacleIndex).getHoleheight() + Yposition + obstacles.get(actualObstacleIndex).getHolesize()) {
+                if (birds.get(i).getX()+birds.get(i).getRadius() > obstacles.get(actualObstacleIndex).getX()) {
+                    if (birds.get(i).getY()-birds.get(i).getRadius() < obstacles.get(actualObstacleIndex).getHoleheight() + Yposition || birds.get(i).getY()+birds.get(i).getRadius() > obstacles.get(actualObstacleIndex).getHoleheight() + Yposition + obstacles.get(actualObstacleIndex).getHolesize()) {
                         birds.get(i).kill();
                         hadkilled=true;
                     }

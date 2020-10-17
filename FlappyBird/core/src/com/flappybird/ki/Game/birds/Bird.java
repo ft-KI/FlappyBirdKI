@@ -7,6 +7,7 @@ import com.flappybird.ki.Main;
 public abstract class Bird {
     float x=0;
     float y=0;
+    float radius=11;
     int fitness=0;
     float fallspeed=0;
     boolean iskilled=false;
@@ -19,7 +20,7 @@ public abstract class Bird {
         if(!iskilled){
             Main.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             Main.shapeRenderer.setColor(0,1,0,1);
-            Main.shapeRenderer.circle(this.x,this.y,11);
+            Main.shapeRenderer.circle(this.x,this.y,radius);
             Main.shapeRenderer.setColor(0.8f, 0.8f, 0, 1);
             Main.shapeRenderer.circle(this.x,this.y,10);
             Main.shapeRenderer.end();
@@ -58,5 +59,9 @@ public abstract class Bird {
 
     public FlappyBirdGame getWorld(){
         return world;
+    }
+
+    public float getRadius() {
+        return radius;
     }
 }
