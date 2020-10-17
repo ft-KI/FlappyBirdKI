@@ -20,12 +20,14 @@ public class FlappyBirdGame {
     int obstacclewide=40;
     int actualObstacleIndex=0;
     int birdsX=100;
+    int populationsize=10;
+    int generation=0;
     public FlappyBirdGame(int x,int y,int w,int h){
         this.Xposition=x;
         this.Yposition=y;
         this.weight=w;
         this.height=h;
-        createNewRandomPopulation(20);
+        createNewRandomPopulation(populationsize);
     }
     void createObstacles(){
         if(worldposition>oldworldposition+300) {
@@ -35,6 +37,7 @@ public class FlappyBirdGame {
         }
     }
     public void draw(){
+        System.out.println("generation: "+generation+" birdsalive: "+birds.size());
         createObstacles();
         Main.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         Main.shapeRenderer.setColor(1,1,1,1);
@@ -49,7 +52,7 @@ public class FlappyBirdGame {
                 Main.shapeRenderer.setColor(0.5f,0,0,1f);
             }
             obstacles.get(i).draw();
-            obstacles.get(i).setX(obstacles.get(i).getX()-1);
+            obstacles.get(i).setX(obstacles.get(i).getX()-3);
             if(obstacles.get(i).getX()<Xposition-obstacclewide){
                 obstacles.remove(i);
                 i--;
@@ -78,13 +81,14 @@ public class FlappyBirdGame {
         }
 
         if(birds.size()<=1){
-            System.out.println(worldposition);
-            createPopulation(birds.get(0),20);
+            generation++;
+            //System.out.println(worldposition);
+            createPopulation(birds.get(0),populationsize);
             resetWorld();
         }
 
 
-        worldposition+=1;
+        worldposition+=3;
     }
     public void createPopulation(Bird mother,int anzahl){
         for(int i=0;i<anzahl;i++) {

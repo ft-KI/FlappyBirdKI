@@ -248,12 +248,20 @@ public class NeuronalNetwork {
             network.addHiddenLayer(this.hiddenNeurons.get(i).size());
         }
         network.createOutputtNeurons(this.outputNeurons.size());
+        network.connectFullMeshed();
 
-
-        network.setInputNeurons((ArrayList<InputNeuron>) this.inputNeurons.clone());
-        network.setHiddenNeurons((ArrayList<ArrayList<WorkingNeuron>>) this.hiddenNeurons.clone());
-        network.setOutputNeurons((ArrayList<WorkingNeuron>) this.outputNeurons.clone());
-
+        for(int i=0;i<this.outputNeurons.size();i++){
+            for(int i1=0;i1<this.outputNeurons.get(i).getInputConnections().size();i1++) {
+                network.getOutputNeurons().get(i).getInputConnections().get(i1).setWeight(this.outputNeurons.get(i).getInputConnections().get(i1).getWeight());
+            }
+        }
+        for(int i=0;i<this.hiddenNeurons.size();i++){
+            for(int i1=0;i1<this.hiddenNeurons.get(i).size();i1++){
+                for(int i2=0;i2<this.hiddenNeurons.get(i).get(i1).getInputConnections().size();i2++){
+                    network.hiddenNeurons.get(i).get(i1).getInputConnections().get(i2).setWeight(this.hiddenNeurons.get(i).get(i1).getInputConnections().get(i2).getWeight());
+                }
+            }
+        }
 
 
         return network;
@@ -266,12 +274,14 @@ public class NeuronalNetwork {
         return count;
     }
     public void randomMutate(float mutationrate){
-        int index=(int)(Math.random()*(NeuronHiddenandOutputCount()));
-        if(index<=outputNeurons.size()){
+        int index=(int)(Math.random()* ((float) NeuronHiddenandOutputCount()));
+        if(index<outputNeurons.size()){
             outputNeurons.get(index).randomMutate(mutationrate);
         }
         for(int i=0;i<hiddenNeurons.size();i++){
-            
+            if(index<hiddenNeurons.get(i).size()){
+                hiddenNeurons.get(i).get(index).randomMutate(mutationrate);
+            }
         }
     }
 
