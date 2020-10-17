@@ -18,13 +18,15 @@ public class FlappyBirdGame {
     int oldworldposition=-400;
     int holesize=180;
     int obstacclewide=40;
+    int actualObstacleIndex=0;
+    int birdsX=100;
     public FlappyBirdGame(int x,int y,int w,int h){
         this.Xposition=x;
         this.Yposition=y;
         this.weight=w;
         this.height=h;
         Bird testbird=new HumanBird();
-        testbird.setX(Xposition+100);
+        testbird.setX(Xposition+birdsX);
         testbird.setY(Xposition+height/2);
         birds.add(testbird);
 
@@ -41,7 +43,18 @@ public class FlappyBirdGame {
         Main.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         Main.shapeRenderer.rect(this.Xposition,this.Yposition,this.weight,this.height);
         Main.shapeRenderer.end();
-        for(int i=0;i<obstacles.size();i++){
+
+        for(int i = obstacles.size() - 1; i >= 0; i--){
+            if(obstacles.get(i).getX()>birdsX+Xposition-obstacclewide){
+                actualObstacleIndex=i;
+            }
+        }
+            for(int i=0;i<obstacles.size();i++){
+            if(i==actualObstacleIndex){
+                Main.shapeRenderer.setColor(0,0.6f,0,1f);
+            }else{
+                Main.shapeRenderer.setColor(0.5f,0,0,1f);
+            }
             obstacles.get(i).draw();
             obstacles.get(i).setX(obstacles.get(i).getX()-1);
             if(obstacles.get(i).getX()<Xposition-obstacclewide){

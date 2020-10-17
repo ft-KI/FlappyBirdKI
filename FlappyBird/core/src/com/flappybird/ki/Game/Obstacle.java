@@ -21,7 +21,6 @@ public class Obstacle {
     }
     public void draw(){
         Main.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        Main.shapeRenderer.setColor(0.5f,0,0,1f);
         Main.shapeRenderer.rect(x,y,width,holeheight+y);
         Main.shapeRenderer.rect(x,holeheight+holesize+y,width, height-(holeheight+holesize));
         Main.shapeRenderer.end();
