@@ -20,7 +20,7 @@ public class FlappyBirdGame {
     int obstacclewide=40;
     int actualObstacleIndex=0;
     int birdsX=100;
-    int populationsize=200;
+    int populationsize=6;
     int generation=0;
     public FlappyBirdGame(int x,int y,int w,int h){
         this.Xposition=x;
