@@ -23,6 +23,7 @@ public class FlappyBirdGame {
     int populationsize=20;
     int generation=1;
     int record = 0;
+    float worldspeed=3;
     public FlappyBirdGame(int x,int y,int w,int h){
         this.Xposition=x;
         this.Yposition=y;
@@ -55,7 +56,7 @@ public class FlappyBirdGame {
                 Main.shapeRenderer.setColor(0.5f,0,0,1f);
             }
             obstacles.get(i).draw();
-            obstacles.get(i).setX(obstacles.get(i).getX()-3);
+            obstacles.get(i).setX(obstacles.get(i).getX()-(int)worldspeed);
             if(obstacles.get(i).getX()<Xposition-obstacclewide){
                 obstacles.remove(i);
                 i--;
@@ -92,7 +93,7 @@ public class FlappyBirdGame {
         }
 
 
-        worldposition+=3;
+        worldposition+=worldspeed;
     }
     public void createPopulation(Bird mother,int anzahl){
         for(int i=0;i<anzahl;i++) {
@@ -118,6 +119,7 @@ public class FlappyBirdGame {
         oldworldposition=-400;
         actualObstacleIndex=0;
         worldposition=0;
+        worldspeed=3;
     }
 
     public ArrayList<Obstacle> getObstacles() {
