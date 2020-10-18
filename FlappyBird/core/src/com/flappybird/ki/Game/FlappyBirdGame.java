@@ -2,6 +2,7 @@ package com.flappybird.ki.Game;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.flappybird.ki.Game.birds.Bird;
+import com.flappybird.ki.Game.birds.HumanBird;
 import com.flappybird.ki.Game.birds.KIBird;
 import com.flappybird.ki.Main;
 
@@ -30,6 +31,7 @@ public class FlappyBirdGame {
         this.weight=w;
         this.height=h;
         createNewRandomPopulation(populationsize);
+
     }
     void createObstacles(){
         if(worldposition>oldworldposition+250) {

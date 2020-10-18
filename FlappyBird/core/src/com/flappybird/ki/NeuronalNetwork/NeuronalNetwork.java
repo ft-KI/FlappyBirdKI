@@ -220,6 +220,21 @@ public class NeuronalNetwork {
         }
     }
 
+
+    public void addBiasforallNeurons(){
+        InputNeuron bias = new InputNeuron();
+        bias.setValue(1f);
+        for(WorkingNeuron wn:outputNeurons){
+            wn.addInputConnection(new Connection(bias,(float) Math.random()*2-1));
+        }
+        for(ArrayList<WorkingNeuron> awn:hiddenNeurons){
+            for(WorkingNeuron wn:awn){
+                wn.addInputConnection(new Connection(bias,(float) Math.random()*2-1));
+            }
+        }
+    }
+
+
     public void connectFullMeshed() {
         connectFullMeshed(false,0.5f);
     }
@@ -249,10 +264,11 @@ public class NeuronalNetwork {
         }
         network.createOutputtNeurons(this.outputNeurons.size());
         network.connectFullMeshed();
+        network.addBiasforallNeurons();
 
         for(int i=0;i<this.outputNeurons.size();i++){
             for(int i1=0;i1<this.outputNeurons.get(i).getInputConnections().size();i1++) {
-                network.getOutputNeurons().get(i).getInputConnections().get(i1).setWeight(this.outputNeurons.get(i).getInputConnections().get(i1).getWeight());
+                    network.getOutputNeurons().get(i).getInputConnections().get(i1).setWeight(this.outputNeurons.get(i).getInputConnections().get(i1).getWeight());
             }
         }
         for(int i=0;i<this.hiddenNeurons.size();i++){
