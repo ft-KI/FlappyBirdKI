@@ -96,6 +96,7 @@ public class FlappyBirdGame {
 
 
         worldposition+=worldspeed;
+        worldspeed+=0.01f;
     }
     public void createPopulation(Bird mother,int anzahl){
         for(int i=0;i<anzahl;i++) {
@@ -150,5 +151,9 @@ public class FlappyBirdGame {
 
     public int getYposition() {
         return Yposition;
+    }
+
+    public float getWorldspeed() {
+        return worldspeed;
     }
 }

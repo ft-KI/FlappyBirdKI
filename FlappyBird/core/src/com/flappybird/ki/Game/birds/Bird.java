@@ -13,7 +13,7 @@ public abstract class Bird {
     boolean iskilled=false;
     FlappyBirdGame world;
     public void flap(){
-        fallspeed=-8;
+        fallspeed=-8-getWorld().getWorldspeed();
     }
     abstract void update();
     public void draw(){
@@ -26,7 +26,7 @@ public abstract class Bird {
             Main.shapeRenderer.end();
             update();
             this.y=this.y-fallspeed;
-            fallspeed+=0.5f;
+            fallspeed+=0.5f+getWorld().getWorldspeed();
         }
     }
 
