@@ -12,6 +12,7 @@ public class NeuronalNetwork {
     private ArrayList<InputNeuron> inputNeurons=new ArrayList<>();
     private ArrayList<ArrayList<WorkingNeuron>>hiddenNeurons=new ArrayList<>();
     private ArrayList<WorkingNeuron>outputNeurons=new ArrayList<>();
+    private boolean isBiasUsed=false;
 
     public NeuronalNetwork(){
 
@@ -83,6 +84,7 @@ public class NeuronalNetwork {
         inputNeurons.clear();
         hiddenNeurons.clear();
         outputNeurons.clear();
+        isBiasUsed=false;
     }
     public void createInputNeurons(int n){
         for(int i=0;i<n;i++){
@@ -159,7 +161,7 @@ public class NeuronalNetwork {
             for (WorkingNeuron wn : outputNeurons) {
                 for (InputNeuron in : inputNeurons) {
                     if(random) {
-                        wn.addInputConnection(new Connection(in, (float) Math.random()*2-1));
+                        wn.addInputConnection(new Connection(in, (float) Math.random()*2f-1f));
                     }else{
                         wn.addInputConnection(new Connection(in, initWeights));
 
@@ -170,7 +172,7 @@ public class NeuronalNetwork {
             for(WorkingNeuron hidden : hiddenNeurons.get(0)) {
                 for(InputNeuron in : inputNeurons) {
                     if(random) {
-                        hidden.addInputConnection(new Connection(in, (float) Math.random()*2-1));
+                        hidden.addInputConnection(new Connection(in, (float) Math.random()*2f-1f));
                     }else{
                         hidden.addInputConnection(new Connection(in, initWeights));
 
@@ -196,7 +198,7 @@ public class NeuronalNetwork {
                 for(int right=0;right<hiddenNeurons.get(layer).size();right++){
                     for(int left=0;left<hiddenNeurons.get(layer-1).size();left++){
                         if(random) {
-                            hiddenNeurons.get(layer).get(right).addInputConnection(new Connection(hiddenNeurons.get(layer-1).get(left),(float) Math.random()*2-1));
+                            hiddenNeurons.get(layer).get(right).addInputConnection(new Connection(hiddenNeurons.get(layer-1).get(left),(float) Math.random()*2f-1f));
 
                         }else{
                             hiddenNeurons.get(layer).get(right).addInputConnection(new Connection(hiddenNeurons.get(layer-1).get(left),initWeights));
@@ -209,7 +211,7 @@ public class NeuronalNetwork {
             for(WorkingNeuron out : outputNeurons) {
                 for(WorkingNeuron hidden : hiddenNeurons.get(hiddenNeurons.size()-1)) {
                     if(random) {
-                        out.addInputConnection(new Connection(hidden, (float) Math.random()*2-1));
+                        out.addInputConnection(new Connection(hidden, (float) Math.random()*2f-1f));
                     }else{
                         out.addInputConnection(new Connection(hidden, initWeights));
 
@@ -225,13 +227,14 @@ public class NeuronalNetwork {
         InputNeuron bias = new InputNeuron();
         bias.setValue(1f);
         for(WorkingNeuron wn:outputNeurons){
-            wn.addInputConnection(new Connection(bias,(float) Math.random()*2-1));
+            wn.addInputConnection(new Connection(bias,(float) Math.random()*2f-1f));
         }
         for(ArrayList<WorkingNeuron> awn:hiddenNeurons){
             for(WorkingNeuron wn:awn){
-                wn.addInputConnection(new Connection(bias,(float) Math.random()*2-1));
+                wn.addInputConnection(new Connection(bias,(float) Math.random()*2f-1f));
             }
         }
+        isBiasUsed=true;
     }
 
 
@@ -264,8 +267,10 @@ public class NeuronalNetwork {
         }
         network.createOutputtNeurons(this.outputNeurons.size());
         network.connectFullMeshed();
-        network.addBiasforallNeurons();
 
+        if(isBiasUsed) {
+            network.addBiasforallNeurons();
+        }
         for(int i=0;i<this.outputNeurons.size();i++){
             for(int i1=0;i1<this.outputNeurons.get(i).getInputConnections().size();i1++) {
                     network.getOutputNeurons().get(i).getInputConnections().get(i1).setWeight(this.outputNeurons.get(i).getInputConnections().get(i1).getWeight());
